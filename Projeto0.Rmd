@@ -1,0 +1,168 @@
+---
+title: ""
+output:
+  pdf_document:
+    number_sections: TRUE
+geometry: "left = 2.5cm, right = 2cm, top = 2cm, bottom = 2cm"
+fontsize: 11pt
+header-includes:
+  - \usepackage{float}
+  - \usepackage{sectsty}
+  - \usepackage{paralist}
+  - \usepackage{setspace}\spacing{1.5}
+  - \usepackage{fancyhdr}
+  - \usepackage{lastpage}
+  - \usepackage{dcolumn}
+  - \usepackage{natbib}\bibliographystyle{agsm}
+  - \usepackage[nottoc, numbib]{tocbibind}
+lang: pt-br
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(tinytex.verbose = TRUE)
+```
+
+```{=tex}
+\allsectionsfont{\centering}
+\subsectionfont{\raggedright}
+\subsubsectionfont{\raggedright}
+```
+\pagenumbering{gobble}
+
+````{=tex}
+\begin{centering}
+
+\vspace{3cm}
+
+```{r uni_logo, echo=F, out.width="20%"}
+# knitr::include_graphics("img/uniedlogo.png")
+```
+
+\vspace{1cm}
+
+\Large
+{\bf UNIVERSIDADE DE SÃO PAULO}
+
+\Large
+{\bf ICMC - Instituto De Ciências Matemáticas e de Computação}
+
+\vspace{1cm}
+
+\Large
+
+\doublespacing
+{\bf SME0823 - Modelos de Regressão e Aprendizado Supervisionado II}
+
+\vspace{5 cm}
+
+
+\normalsize
+
+{\bf  Adriane Akemi Yamaguti - NUSP: 11915623
+
+      Aimê    - NUSP: }
+
+\vspace{3 cm}
+
+{\bf Projeto 0
+}
+
+\vspace{8 cm}
+
+\normalsize
+SÃO CARLOS
+
+\end{centering}
+````
+
+<!-- Sumário -->
+
+\newpage
+
+```{=tex}
+\centering
+\raggedright
+\newpage
+\tableofcontents
+\newpage
+```
+# Primer exemplo
+
+Este é um documento R Markdown. Markdown é uma sintaxe de formatação simples para a criação de documentos HTML, PDF e MS Word. Para obter mais detalhes sobre o uso de R Markdown, consulte <http://rmarkdown.rstudio.com>. Quando você clica no botão \*\* Knit \*\*, um documento é gerado, incluindo tanto o conteúdo quanto a saída de qualquer fragmento de código R embutido no documento. Você pode incorporar um fragmento de código R como este:
+
+## Generando valores de uma lista de enteros positivos entre 1 e 10
+
+```{r data}
+x=seq(1:10)
+x
+```
+
+O algoritmo acima cria uma variável `x` que armazena uma lista de números inteiros positivos de 1 a 10. A função seq( ) retorna uma sequência de números, no qual o primeiro argumento indica que começa no 1 e vai até o valor incluso que é especificado no segundo argumento (10). Além disso, por default, a função incrementa de um em um.
+
+## Estatísticas básicas
+
+```{r desc}
+mean(x)
+sd(x)
+```
+
+Foi realizada a importação da biblioteca statistics do python que possui diversas funções para cálculos estatísticos. A função mean( ), calculamos a média. Já a função sd( ), 0 desvio padrão.
+
+## Generando valores aleatórios de uma nova variável em função da anterior com erros normais
+
+```{r ydata}
+set.seed(11882429)
+y=x+rnorm(10)
+y
+mean(y)
+sd(y)
+```
+
+Foi utilizado um gerador de números aleatórios através da função `set.seed(11882429)` que serve para fins de reprodutibilidade. Em seguida, temos a função rnorm( ) que gera uma distribuição normal, no qual o defaut é representado por média 0 e desvio padrão 1. Os valores são somados com a variável x e esse cálculo é armazenado na variável y, que é semelhante à lista de valores em x. mas com uma variação aleatória adicionada.
+
+Por fim, são apresentados os resultados da média e desvio padrão de `y`.
+
+## Ploteando os dados para ver relacionamento entre x e y
+
+```{r plot, echo=FALSE}
+plot(x,y)
+```
+
+Observe que o parâmetro `echo = FALSE` foi adicionado ao fragmento de código para evitar a impressão do código R que gerou o gráfico.
+
+A função plot( ) é utilizada para criar gráfico de dispersão. Neste código, informamos que o eixo x é representado pelos valores da variável x e o eixo y, a variável y.
+
+O gráfico de dispersão mostra uma relação positiva, ou seja, x e y são proporcionais e na medida que x aumenta, y também aumenta. No entanto, como o gráfico é baseado em valores gerados aleatoriamente, os resultados podem variar de acordo com a semente usada para gerar os números aleatórios.
+
+Em resumo, o gráfico de dispersão é uma ferramenta útil para visualizar a relação entre duas variáveis e pode ajudar a identificar padrões ou tendências nos dados.
+
+# Correlação entre x e y
+
+```{r cor}
+cor(x,y)
+```
+
+A função de correlação de Pearson é dado por:
+
+$$r_{X,Y} = \frac{(\sum_{i=1}^{N} X_i * Y_i) - n \bar{X} \bar{Y}}{(n-1) * S_X * S_Y}$$
+
+$$r_{X,Y} = 0.9402429$$
+
+A correlação de Pearson é uma medida estatística que mede a força da relação linear entre duas variáveis. Uma correlação de Pearson de 0.94 indica uma forte correlação positiva entre x e y. Isso significa que à medida que os valores de "x" aumentam, os valores de "y" também aumentam consistentemente.
+
+# Teste de hipóteses
+
+Sejam:
+
+$$H_0: r = 0$$
+
+$$H_1: r \not = 0$$
+
+Temos: $r = 0.9402429; n = 10$ e $\alpha = 5\%$.
+
+Com base na tabela de valores críticos de correlação de Pearson, temos $r_{\text{crítico}} = 0,632$. Dessa forma, rejeita $H_0$ ao nível de significância de 0,05% e dizemos que X e Y estão correlacionados.
+
+# Conclusão
+
+Com base na análise realizada, podemos concluir que há uma forte correlação positiva (correlação de Pearson de 0,94) entre as variáveis "x" e "y". A forte correlação pode ser explicada pelo fato de que "y" foi gerado a partir de "x" adicionando um erro aleatório que segue uma distribuição normal padrão. Esse processo de adicionar um erro normal aleatório é comumente usado para simular dados em experimentos e estudos.
